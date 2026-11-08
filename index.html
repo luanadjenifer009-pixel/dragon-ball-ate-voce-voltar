@@ -1,1 +1,953 @@
 
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dragon Ball — Nossa História</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Orbitron:wght@700;800&display=swap');
+*{box-sizing:border-box}
+body{margin:0;background:#101b22;color:#fff;font-family:Poppins,sans-serif}
+button{font-family:inherit;cursor:pointer}
+header{height:70px;background:#17232b;display:flex;align-items:center;padding:10px 14px;gap:12px;position:sticky;top:0;z-index:5;box-shadow:0 2px 10px #0005}
+header img{width:45px;height:45px;border-radius:50%;object-fit:cover;border:2px solid #f6a623}
+.head{flex:1;min-width:0}
+.head strong{display:block;font-size:14px}
+.head small{color:#aab8c0;font-size:11px}
+header button{background:#344750;border:0;color:white;border-radius:20px;padding:9px;font-size:11px}
+main{max-width:750px;margin:auto;padding:15px 11px 40px}
+.screen{display:none}
+.screen.active{display:block}
+.intro{background:#192832;border:1px solid #9c6d2b;border-radius:19px;padding:19px;text-align:center;margin:7px 0 18px}
+.logo{font-family:Orbitron,sans-serif;color:#ffbb47;font-size:clamp(23px,6vw,38px);text-shadow:0 0 15px #ff8100}
+.cover{width:100%;max-height:350px;object-fit:cover;border-radius:13px;margin:15px 0}
+.chapter{font-size:11px;letter-spacing:3px;color:#ffc45c;font-weight:800}
+h2{font-size:21px;color:#ffd28b;margin:10px 0}
+.summary{font-size:13px;line-height:1.9;color:#e2e8eb;text-align:left}
+.start{background:#f6a623;color:#251600;border:0;padding:13px 23px;border-radius:25px;font-weight:800;margin-top:12px}
+.progress{height:5px;background:#34444c;border-radius:10px;margin:10px 0 17px;overflow:hidden}
+.progress div{height:100%;background:#f6a623;transition:.3s}
+.wall{
+ background:linear-gradient(#101820b8,#101820d9),
+ url("file_0000000021cc820e817b20ec875a30d9.png") center/cover fixed;
+ padding:12px 8px;min-height:450px;border-radius:15px
+}
+.date{background:#293b43;color:#e0e7eb;font-size:10px;text-align:center;padding:7px 12px;border-radius:8px;width:max-content;margin:7px auto 19px}
+.message{display:flex;align-items:flex-end;gap:6px;margin:12px 0;animation:show .25s ease}
+@keyframes show{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+.avatar{width:32px;height:32px;border-radius:50%;object-fit:cover;flex-shrink:0}
+.bubble{background:#202c33;border-radius:4px 13px 13px 13px;padding:9px 11px;max-width:88%;box-shadow:0 1px 2px #0005}
+.sender{font-size:11px;font-weight:800;color:#70c4ee;margin-bottom:4px}
+.msg{font-size:12px;line-height:1.85;white-space:pre-wrap;overflow-wrap:anywhere}
+.time{text-align:right;font-size:9px;color:#aebac1;margin-top:5px}
+.message.me{justify-content:flex-end}
+.message.me .bubble{background:#005c4b;border-radius:13px 4px 13px 13px}
+.message.me .sender{color:#a6ead1}
+.message.me .avatar{order:2}
+.message.system{justify-content:center}
+.message.system .bubble{background:#31434b;text-align:center;border-radius:10px;max-width:96%}
+.message.system .msg{font-size:10px;color:#d7e1e6}
+.actions{display:flex;justify-content:space-between;gap:8px;margin:15px 0}
+.actions button{background:#293b43;border:1px solid #52636b;color:white;padding:11px 14px;border-radius:22px;font-size:12px}
+.actions .next{background:#f6a623;color:#251600;border:0;font-weight:800}
+footer{text-align:center;font-size:10px;color:#82949c;padding:18px}
+#messages{padding-bottom:10px}
+.end-img{width:100%;border-radius:12px;margin:12px 0}
+</style>
+</head>
+<body>
+
+<header>
+<img src="file_0000000021cc820e817b20ec875a30d9.png">
+<div class="head">
+<strong>Guerreiros Z 🐉</strong>
+<small>Grupo • Dragon Ball</small>
+</div>
+<button onclick="music()">♫ MÚSICA</button>
+</header>
+
+<main>
+<div class="progress"><div id="bar"></div></div>
+
+<section id="home" class="screen active">
+<div class="intro">
+<div class="logo">DRAGON BALL</div>
+<h2>Até Você Voltar ❤️</h2>
+<img class="cover" src="file_0000000057ec820e85417bce5d04520f.png">
+<p class="summary">
+Uma história de amizade, amor, saudade e grandes aventuras.
+No universo dos Guerreiros Z, Luana vive dias especiais ao lado dos personagens de Dragon Ball. Mas uma ausência inesperada vai mudar a rotina do grupo...
+<br><br>
+Vinte capítulos. Muitas conversas. Uma história que ninguém vai esquecer.
+</p>
+<button class="start" onclick="openChapter(0)">COMEÇAR A HISTÓRIA 🐉</button>
+</div>
+</section>
+
+<section id="chapterIntro" class="screen">
+<div class="intro">
+<div class="chapter" id="number"></div>
+<h2 id="title"></h2>
+<img class="cover" id="chapterImage">
+<p class="summary" id="description"></p>
+<button class="start" onclick="openMessages()">ENTRAR NO WHATSAPP 💬</button>
+</div>
+</section>
+
+<section id="chat" class="screen">
+<div class="wall">
+<div class="date" id="date"></div>
+<div id="messages"></div>
+</div>
+<div class="actions">
+<button onclick="previous()">← VOLTAR</button>
+<button class="next" onclick="next()">PRÓXIMO →</button>
+</div>
+</section>
+
+<section id="ending" class="screen">
+<div class="intro">
+<div class="logo">ATÉ A PRÓXIMA! 🐉</div>
+<img class="end-img" src="file_0000000057ec820e85417bce5d04520f.png">
+<h2>Uma história que continua... ❤️</h2>
+<p class="summary">
+Entre batalhas, conversas, risadas e momentos difíceis, os Guerreiros Z descobriram que a verdadeira força também está em cuidar de quem amamos.
+<br><br>
+E para Luana e Richard, essa foi apenas mais uma página de uma história que ainda tem muito para acontecer.
+</p>
+<div id="endingMessages"></div>
+<button class="start" onclick="openChapter(0)">RECOMEÇAR</button>
+</div>
+</section>
+<footer>Dragon Ball • Uma história de Luana ❤️</footer>
+</main>
+
+<!-- Os nomes das músicas ficam exatamente como você enviou -->
+<audio id="song1" src="Romantic Ageru Yo" preload="auto"></audio>
+<audio id="song2" src="Hatsukoi wa Kumo ni Notte" preload="auto"></audio>
+
+<script>
+const images={
+ Goku:"goku_capa-1.jpg",
+ Vegeta:"Vegeta-Dragon-Ball.jpg",
+ Bulma:"a00171f2e15d05ee9d6c6fefbae890bf.jpg",
+ Trunks:"trunks_xphu.jpg",
+ Piccolo:"dfm75yk-6ef5c086-ecd4-43b8-97f5-c44bec87305d.jpg",
+ Luana:"file_0000000085b8820e83de503a4432937a.png",
+ Richard:"file_000000004310820e87b6a150757a33c9.png",
+ Gohan:"IMG-20261108-WA0039.jpg"
+};
+
+// Cada capítulo tem sua própria história e conversas.
+const chapters=[
+
+// CAPÍTULO 1
+{
+title:"Dois dias de silêncio",
+image:images.Luana,
+description:"Richard está há dois dias sem internet. O grupo continua agitado, mas Luana está muito mais quietinha do que de costume. Ela sente falta das conversas, das brincadeiras e até das pequenas mensagens do namorado. Os Guerreiros Z começam a perceber que algo está diferente.",
+messages:[
+["system","08:02 • Grupo Guerreiros Z 🐉"],
+["Goku","BOM DIAAAAAAAAA, POVO!! 🌞😁 Alguém já tomou café? Porque eu estou morrendo de fome! Hoje acordei com uma vontade de comer tão grande que acho que consigo acabar com toda a comida da casa!"],
+["Bulma","Goku, são oito da manhã. Você não consegue passar nem cinco minutos sem falar de comida?"],
+["Vegeta","Kakarotto, seu cérebro realmente só funciona quando existe comida envolvida?"],
+["Goku","Claro que não! Eu também penso em lutar! E depois de lutar eu fico com fome de novo!"],
+["Trunks","KKKKKKKK bom dia para vocês também. Acho que essa discussão já virou parte da rotina do grupo."],
+["Gohan","Bom dia, pessoal! Eu estava pensando em organizar alguma coisa para hoje. Talvez um passeio ou um treinamento mais tranquilo."],
+["Piccolo","Desde que não envolva a destruição de alguma construção, não me oponho."],
+["Bulma","Eu apoio o passeio. Já estou cansada de ter que consertar as coisas que vocês quebram."],
+["Luana","Bom dia, gente... ❤️"],
+["Gohan","Bom dia, Luana! Como você está hoje?"],
+["Luana","Estou bem, sim. Só acordei meio quietinha hoje."],
+["Trunks","Você está mesmo. Normalmente já chega aqui falando um monte de coisa KKKKK. Aconteceu alguma coisa?"],
+["Luana","Não aconteceu nada ruim. É só que estou sentindo falta do Richard. Já faz dois dias que ele está sem internet e não consegue aparecer."],
+["Bulma","Ah, meu bem... agora entendi. Você deve estar sentindo muita falta das conversas de vocês."],
+["Luana","Estou sim. É estranho porque eu estava acostumada a conversar com ele todos os dias. Às vezes acontece alguma coisa engraçada e minha primeira vontade é mandar para ele. Aí lembro que não tem como."],
+["Gohan","Imagino como deve ser. Quando alguém faz parte da nossa rotina, até as pequenas coisas acabam lembrando aquela pessoa."],
+["Goku","Mas ele vai voltar! E quando voltar você vai ter tantas coisas para contar que nem vai saber por onde começar! 😁"],
+["Luana","KKKKKK espero que sim, Goku. Estou contando os dias."],
+["Vegeta","Dois dias não são exatamente uma eternidade. Mas entendo que seja inconveniente ficar sem contato."],
+["Bulma","Vegeta, essa foi sua tentativa de ser gentil? KKKKK."],
+["Vegeta","Não preciso tentar ser gentil."],
+["Trunks","Pai, pelo menos você tentou!"],
+["Luana","Eu sei que ele não está sem falar comigo porque quer. É só a internet mesmo. Não estou brava, só estou com saudade."],
+["Piccolo","Então não precisa transformar sua saudade em preocupação. Ele está sem conexão, não deixou de se importar com você."],
+["Luana","Eu sei, Piccolo. Só queria receber uma mensagem dele agora. Um simples 'oi, amor' já deixaria meu dia tão feliz."],
+["Gohan","Enquanto isso, você tem a gente. Pode conversar, brincar ou simplesmente ficar aqui acompanhando as mensagens."],
+["Bulma","Exatamente. Você não precisa fingir animação quando não está se sentindo assim. Estamos aqui."],
+["Goku","E SE QUISER EU POSSO MANDAR UMA MENSAGEM DE BOM DIA A CADA CINCO MINUTOS!"],
+["Vegeta","Isso seria uma tortura."],
+["Luana","KKKKKKKKKK não precisa, Goku. Uma já está ótimo."],
+["Trunks","Pelo menos conseguimos fazer você rir um pouquinho."],
+["Luana","Conseguiram. Obrigada por se preocuparem comigo. Vou ficar aqui com vocês hoje. ❤️"],
+["Gohan","E vamos ficar felizes com sua companhia também."]
+]
+},
+
+// CAPÍTULO 2
+{
+title:"A conversa que está faltando",
+image:images.Bulma,
+description:"Luana tenta acompanhar as conversas do grupo, mas sente falta de compartilhar seu dia com Richard. Bulma percebe que a amiga está esperando uma notificação e decide fazer companhia a ela.",
+messages:[
+["system","09:15 • Grupo Guerreiros Z 🐉"],
+["Bulma","Bom dia, gente! Hoje quero organizar alguma coisa divertida. Não aguento mais ver todo mundo treinando e discutindo."],
+["Goku","EU VOTO EM COMIDA!"],
+["Vegeta","Você sempre vota em comida."],
+["Trunks","Que tal uma competição de jogos?"],
+["Gohan","Podemos fazer perguntas e desafios também."],
+["Luana","Parece legal. Eu participo."],
+["Bulma","Ótimo! Mas antes quero saber se você está melhor hoje, Luana."],
+["Luana","Estou um pouquinho melhor. Só que continuo sentindo falta dele. Hoje vi uma coisa engraçada e quase mandei para o Richard automaticamente."],
+["Trunks","Acontece muito quando a gente está acostumado a compartilhar tudo com alguém."],
+["Luana","Sim! Eu estava vendo uma coisa e pensei: 'ele vai rir disso'. Depois lembrei que ele não está conseguindo entrar."],
+["Gohan","Você pode guardar as coisas que quer contar. Quando ele voltar, vai ter uma coleção de histórias."],
+["Luana","KKKKKK acho que vou precisar de umas dez horas de conversa para contar tudo."],
+["Goku","DEZ HORAS? ISSO É MAIS TEMPO DO QUE EU LEVO PARA TREINAR!"],
+["Vegeta","E ainda assim você não consegue ficar quieto durante cinco minutos."],
+["Bulma","Gente, tive uma ideia. Vamos fazer uma tarde de jogos para distrair nossa amiga."],
+["Piccolo","Se for necessário, posso participar. Mas não prometo gostar das brincadeiras."],
+["Trunks","Você sempre fala isso e acaba participando de tudo."],
+["Piccolo","Não espalhe."],
+["Luana","KKKKKKKK vocês são muito engraçados."],
+["Bulma","E olha só, a Luana está rindo! Já considero uma pequena vitória."],
+["Luana","É que vocês estão tentando me animar e eu acho isso muito fofo. Mas tem horas que eu fico olhando a conversa com ele e bate aquela saudade."],
+["Gohan","Não tem problema. Você pode sentir falta dele e continuar aproveitando a companhia dos seus amigos. Uma coisa não anula a outra."],
+["Luana","Eu precisava ouvir isso. Às vezes parece que fico esperando o celular tocar o tempo inteiro."],
+["Trunks","Então vamos fazer você esquecer um pouquinho o celular. Desafio de perguntas começando em cinco minutos!"],
+["Goku","EU QUERO SER O PRIMEIRO!"],
+["Vegeta","Você será o primeiro a passar vergonha."],
+["Luana","KKKKKKKKKK. Tá bom, vou participar! ❤️"]
+]
+},
+
+// CAPÍTULO 3
+{
+title:"Todo mundo percebeu",
+image:images.Gohan,
+description:"Os amigos conversam sobre a mudança de comportamento de Luana. Eles não querem pressioná-la, mas sabem que ela está sentindo falta de Richard. Uma conversa sincera aproxima ainda mais o grupo.",
+messages:[
+["system","10:30 • Grupo Guerreiros Z 🐉"],
+["Trunks","Gente, posso falar uma coisa?"],
+["Bulma","Pode, querido."],
+["Trunks","Vocês perceberam que a Luana está bem mais quietinha desde que o Richard ficou sem internet?"],
+["Gohan","Percebi. Ela está tentando participar, mas dá para ver que está sentindo falta dele."],
+["Piccolo","É natural. A ausência de alguém importante pode afetar até as coisas mais simples do dia."],
+["Bulma","Eu fico com dó quando vejo ela abrindo a conversa e esperando alguma mensagem."],
+["Vegeta","Não existe muito que possamos fazer além de dar espaço e companhia."],
+["Goku","Podemos fazer uma festa! Quando alguém fica triste, uma festa ajuda!"],
+["Trunks","Você quer fazer uma festa para qualquer situação KKKKK."],
+["Goku","E funciona!"],
+["Luana","Gente? Por que vocês estão falando baixinho? KKKKK"],
+["Bulma","Não estávamos falando baixinho, não!"],
+["Luana","Estavam sim KKKKK. Eu vi."],
+["Gohan","Estávamos preocupados porque você parece estar sentindo falta do Richard."],
+["Luana","Ah... eu estou mesmo. Não queria deixar vocês preocupados."],
+["Bulma","Você não precisa esconder isso. A gente gosta de você e quer saber quando não está bem."],
+["Luana","É que eu fico pensando como vai ser quando ele voltar. Quero contar tudo, perguntar como ele está, saber se está tudo bem. Tenho tantas coisas guardadas."],
+["Trunks","Acho que ele vai ficar feliz em saber que você queria compartilhar seu dia com ele."],
+["Gohan","E até lá podemos fazer companhia. Não precisa enfrentar esses momentos sozinha."],
+["Luana","Eu gosto muito de vocês. De verdade. Mesmo quando fico quietinha, gosto de estar aqui."],
+["Piccolo","Então fique. Não é necessário preencher todos os silêncios com palavras."],
+["Goku","MAS EU GOSTO DE PREENCHER COM PALAVRAS!"],
+["Vegeta","Isso todos nós já sabemos."],
+["Luana","KKKKKKKKKK. Vocês são minha segunda família nesse grupo."],
+["Bulma","E você é nossa amiga. Não se esqueça disso. ❤️"]
+]
+},
+
+// CAPÍTULO 4
+{
+title:"Uma tarde para sorrir",
+image:images.Goku,
+description:"Bulma organiza uma tarde de brincadeiras para tirar Luana um pouco da tristeza. Goku inventa desafios absurdos, Vegeta reclama de tudo e Trunks transforma a tarde em uma competição.",
+messages:[
+["system","13:00 • Grupo Guerreiros Z 🐉"],
+["Bulma","ATENÇÃO! A tarde de jogos está oficialmente começando!"],
+["Goku","EU ESTOU PRONTO!"],
+["Vegeta","Você está pronto para comer, isso sim."],
+["Trunks","Primeiro desafio: cada um precisa responder uma pergunta sem fugir do assunto."],
+["Gohan","Isso parece interessante."],
+["Luana","Estou curiosa KKKKK."],
+["Bulma","Pergunta para o Goku: o que você faria se tivesse um dia inteiro sem precisar treinar?"],
+["Goku","Comeria, dormiria, comeria de novo e depois chamaria o Vegeta para lutar!"],
+["Vegeta","Eu me recusaria."],
+["Trunks","Pergunta para o Vegeta: qual é a coisa mais importante para você?"],
+["Vegeta","Minha família. E minha própria força."],
+["Bulma","Olha só! Ele respondeu sem reclamar!"],
+["Gohan","Agora a pergunta para Luana: o que você mais gostaria de fazer neste momento?"],
+["Luana","Acho que conversar com o Richard. Queria contar como foi meu dia, ouvir ele falando das coisas dele e ficar conversando até esquecer da hora."],
+["Trunks","Essa foi uma resposta muito bonita."],
+["Luana","É que eu sinto falta até das conversas mais bobas. Às vezes a gente nem estava falando de nada importante e mesmo assim era meu momento favorito."],
+["Bulma","Isso é muito especial, Luana. São essas pequenas coisas que fazem uma pessoa ter um lugar tão importante na nossa vida."],
+["Goku","QUANDO ELE VOLTAR VAMOS FAZER UMA FESTA ENORME!"],
+["Vegeta","Você quer uma desculpa para comer, admita."],
+["Goku","TAMBÉM!"],
+["Luana","KKKKKKKKKK eu vou cobrar essa festa, viu?"],
+["Gohan","E até lá, vamos continuar criando boas lembranças."],
+["Luana","Obrigada pela tarde, gente. Hoje consegui rir bastante. ❤️"]
+]
+},
+
+// CAPÍTULO 5
+{
+title:"Uma música cheia de lembranças",
+image:images.Trunks,
+description:"Uma das músicas favoritas começa a tocar e Luana lembra de Richard. Ela decide guardar as canções para ouvir com ele quando puderem conversar novamente.",
+messages:[
+["system","16:22 • Grupo Guerreiros Z 🐉"],
+["Trunks","Alguém aí gosta de ouvir música enquanto faz alguma coisa?"],
+["Bulma","Eu adoro. Música muda completamente o clima do dia."],
+["Goku","Eu gosto de música animada!"],
+["Vegeta","Desde que não seja você cantando."],
+["Goku","EI! EU CANTO BEM!"],
+["Gohan","A música pode trazer muitas lembranças. Às vezes uma melodia faz a gente lembrar de um momento específico."],
+["Luana","É exatamente isso. Hoje ouvi Romantic Ageru Yo e lembrei do Richard."],
+["Bulma","Você gosta muito dessa música?"],
+["Luana","Gosto. E também tem Hatsukoi wa Kumo ni Notte. Queria muito ouvir as duas com ele."],
+["Trunks","Então temos uma trilha sonora para o reencontro!"],
+["Goku","QUANDO ELE VOLTAR EU VOU CANTAR JUNTO!"],
+["Vegeta","Por favor, não."],
+["Luana","KKKKKKKK Goku, acho que vou precisar de um aviso antes disso."],
+["Gohan","Você pode guardar essas músicas para compartilhar com ele. Vai ser um momento bonito."],
+["Luana","Eu pensei nisso. Quero mandar para ele e contar que fiquei lembrando dele enquanto ouvia."],
+["Bulma","Aposto que ele vai gostar de saber."],
+["Luana","Eu queria que ele pudesse estar aqui agora. Tem tanta coisa que eu queria dividir com ele."],
+["Piccolo","O tempo não precisa apagar o carinho. Você pode guardar essas lembranças sem deixar que a espera tome conta de tudo."],
+["Luana","Vou tentar. Obrigada, Piccolo."],
+["Trunks","Quando ele voltar, quero ver a playlist completa!"],
+["Luana","Vai ter sim KKKKK. ❤️"]
+]
+},
+
+// CAPÍTULO 6
+{
+title:"Um dia mais difícil",
+image:images.Luana,
+description:"Luana acorda especialmente sensível. A saudade pesa mais do que nos outros dias, e os amigos precisam lembrá-la de que ela também merece descansar e receber carinho.",
+messages:[
+["system","07:48 • Grupo Guerreiros Z 🐉"],
+["Gohan","Bom dia, Luana. Como você está hoje?"],
+["Luana","Bom dia... hoje acordei meio tristinha."],
+["Bulma","O que aconteceu, querida?"],
+["Luana","Nada específico. Só estou sentindo muita falta dele. Ontem fui dormir pensando que queria receber uma mensagem de boa noite."],
+["Trunks","Às vezes a saudade aparece mais forte justamente nos momentos em que a gente está acostumado a conversar."],
+["Luana","Sim. Eu estava acostumada a desejar boa noite para ele, contar como foi o dia e depois dormir tranquila."],
+["Gohan","Você tem conseguido descansar?"],
+["Luana","Mais ou menos. Fico pensando se ele conseguiu resolver o problema da internet."],
+["Piccolo","Não se desgaste tentando controlar algo que não depende de você. Cuide do que está ao seu alcance."],
+["Bulma","E uma dessas coisas é cuidar de você! Já tomou café?"],
+["Luana","Ainda não."],
+["Bulma","Então primeiro vamos resolver isso. Quero você se alimentando direitinho."],
+["Goku","EU POSSO PREPARAR O CAFÉ!"],
+["Vegeta","Isso seria um desastre."],
+["Goku","EU SEI FAZER COMIDA!"],
+["Trunks","A última vez você colocou sal no suco."],
+["Goku","FOI UM ACIDENTE!"],
+["Luana","KKKKKKKKKK vocês são impossíveis."],
+["Richard não",""],
+["Gohan","Viu? Já conseguimos arrancar um sorriso."],
+["Luana","Conseguiram. Eu ainda estou com saudade, mas estou feliz por ter vocês aqui."],
+["Bulma","Então hoje vamos fazer um dia tranquilo. Sem cobranças, sem pressa."],
+["Luana","Obrigada. Queria muito que ele soubesse que estou esperando, mas sem querer que se sinta culpado."],
+["Piccolo","Quando houver oportunidade, você poderá explicar isso. O carinho não precisa vir acompanhado de cobrança."],
+["Luana","É exatamente isso. ❤️"]
+]
+},
+
+// CAPÍTULO 7
+{
+title:"A promessa dos Guerreiros Z",
+image:images.Piccolo,
+description:"Piccolo e Gohan conversam com Luana sobre confiança e paciência. O grupo faz uma promessa: ninguém vai deixar a amiga enfrentar a espera sozinha.",
+messages:[
+["system","11:06 • Grupo Guerreiros Z 🐉"],
+["Piccolo","Luana, gostaria de conversar com você."],
+["Luana","Pode falar, Piccolo."],
+["Piccolo","Tenho percebido que você tenta mudar de assunto sempre que alguém pergunta como está se sentindo."],
+["Luana","É que não quero ficar falando da mesma coisa e deixar todo mundo cansado."],
+["Gohan","Você não está cansando ninguém. Não precisa esconder o que sente para continuar fazendo parte do grupo."],
+["Bulma","Exatamente! A gente não gosta de você apenas quando está sorrindo e fazendo piada."],
+["Trunks","Você pode chegar aqui e falar que está com saudade, que está cansada ou que não quer conversar. Tudo bem."],
+["Luana","Eu acho que estava precisando ouvir isso. Às vezes fico com medo de parecer exagerada."],
+["Piccolo","Sentir falta de alguém não é exagero. O importante é não esquecer de si mesma durante a espera."],
+["Goku","E EU PROMETO FAZER VOCÊ RIR SEMPRE QUE PRECISAR!"],
+["Vegeta","Essa promessa pode acabar sendo mais barulhenta do que útil."],
+["Goku","MAS É UMA PROMESSA!"],
+["Luana","KKKKKKKKKK. Eu aceito, Goku."],
+["Gohan","Então está decidido. Vamos continuar juntos, cada um do seu jeito."],
+["Bulma","E quando Richard voltar, vamos recebê-lo muito bem."],
+["Trunks","Já estou pensando na surpresa!"],
+["Luana","Vocês não precisam preparar nada enorme."],
+["Bulma","Não prometemos nada KKKKK."],
+["Luana","Eu só quero poder conversar com ele novamente. Isso já seria suficiente."],
+["Piccolo","Às vezes, o que mais importa é justamente aquilo que parece simples."],
+["Luana","Eu gosto muito de vocês. Obrigada por não desistirem de me animar. ❤️"]
+]
+},
+
+// CAPÍTULO 8
+{
+title:"O grupo não fica parado",
+image:images.Gohan,
+description:"Os Guerreiros Z decidem sair para uma aventura e Luana participa. Ela continua sentindo falta de Richard, mas começa a encontrar alegria nas amizades que estão ao seu lado.",
+messages:[
+["system","09:35 • Grupo Guerreiros Z 🐉"],
+["Goku","PESSOAL! Hoje vamos sair para explorar uma região nova!"],
+["Bulma","Você já decidiu tudo sem perguntar a ninguém?"],
+["Goku","MAS EU ESTOU PERGUNTANDO AGORA!"],
+["Vegeta","Que planejamento impressionante."],
+["Trunks","Eu topo! Faz tempo que não fazemos uma exploração juntos."],
+["Gohan","Também acho uma boa ideia. Podemos aproveitar o dia."],
+["Luana","Eu vou também! Acho que preciso sair um pouco e conhecer lugares diferentes."],
+["Bulma","Ótimo! Vou preparar tudo."],
+["Piccolo","Não se afastem da equipe. Não sabemos o que podemos encontrar."],
+["Goku","RELAXA, PICCOLO! VAI SER DIVERTIDO!"],
+["Vegeta","Com Kakarotto, nada é tranquilo."],
+["Trunks","Isso é verdade KKKKK."],
+["Luana","Já estou imaginando o Goku encontrando alguma coisa para comer no meio do passeio."],
+["Goku","EU SEMPRE ENCONTRO!"],
+["Gohan","Pelo menos estamos todos juntos."],
+["Luana","Sabe, hoje eu consegui ficar um tempo sem olhar o celular. Foi bom."],
+["Bulma","Fico feliz. Não significa que você deixou de sentir saudade, apenas que também está vivendo seu dia."],
+["Luana","Sim. Acho que estou aprendendo a lidar melhor com isso."],
+["Piccolo","É um progresso. Continue assim."],
+["Trunks","E quando Richard voltar, você vai ter uma aventura inteira para contar!"],
+["Luana","Vou contar cada detalhe. Até as partes em que o Goku quase acabou com nosso lanche KKKKK."],
+["Goku","EU NÃO FIZ NADA!"],
+["Vegeta","Ainda."]
+]
+},
+
+// CAPÍTULO 9
+{
+title:"As coisas que queremos contar",
+image:images.Trunks,
+description:"O grupo começa a lembrar das pequenas coisas que tornam uma amizade especial. Luana fala sobre todas as histórias que está guardando para contar a Richard quando ele voltar.",
+messages:[
+["system","15:10 • Grupo Guerreiros Z 🐉"],
+["Trunks","Pergunta aleatória: vocês costumam guardar coisas para contar a alguém depois?"],
+["Gohan","Às vezes. Principalmente quando sei que uma pessoa vai gostar de saber."],
+["Bulma","Eu faço isso com frequência."],
+["Goku","Eu guardo comida para depois!"],
+["Vegeta","Isso não responde à pergunta."],
+["Luana","Eu estou fazendo exatamente isso. Tenho várias coisas que queria contar para o Richard."],
+["Trunks","Conta uma!"],
+["Luana","Hoje eu vi uma coisa que parecia muito com uma piada que ele faria. Fiquei imaginando a reação dele e comecei a rir sozinha."],
+["Gohan","Isso é muito bonito. Você conhece tão bem o jeito dele que consegue imaginar a reação."],
+["Luana","Sim! E também quero contar das nossas conversas aqui, das músicas, das brincadeiras e de como vocês me ajudaram."],
+["Bulma","Ele vai perceber o quanto foi lembrado."],
+["Luana","Eu não quero que ele pense que estou triste com ele. Sei que está sem internet. Só quero que saiba que senti falta da presença dele."],
+["Piccolo","Existe uma diferença entre cobrar alguém e compartilhar um sentimento. Você pode fazer isso com tranquilidade."],
+["Trunks","E nós vamos estar aqui para ouvir todas essas histórias quando ele voltar."],
+["Goku","EU TAMBÉM!"],
+["Vegeta","Você provavelmente vai interromper todas elas."],
+["Goku","NÃO VOU!"],
+["Luana","KKKKKKKKKK. Acho que vou precisar de uma lista para não esquecer nada."],
+["Gohan","Faça isso. Vai ser uma boa lembrança desses dias."],
+["Luana","Vou fazer. E a primeira coisa da lista é: 'senti muita saudade de você'. ❤️"]
+]
+},
+
+// CAPÍTULO 10
+{
+title:"Na espera de uma notificação",
+image:images.Luana,
+description:"A espera chega a um momento especial. Luana está mais tranquila, mas ainda sente falta de Richard. Os amigos começam a preparar uma recepção, sem saber exatamente quando ele vai conseguir voltar.",
+messages:[
+["system","08:20 • Grupo Guerreiros Z 🐉"],
+["Bulma","Bom dia, pessoal! Hoje quero organizar uma coisa."],
+["Goku","COMIDA?"],
+["Bulma","Goku, por favor, me deixa terminar!"],
+["Trunks","O que aconteceu?"],
+["Bulma","Estava pensando que, quando Richard conseguir voltar, seria legal fazer uma recepção para ele."],
+["Gohan","Acho uma ótima ideia. Ele vai ficar feliz em ver todo mundo."],
+["Piccolo","Desde que não seja uma comemoração exagerada."],
+["Goku","EU QUERO UMA FESTA ENORME!"],
+["Vegeta","Você quer um banquete."],
+["Luana","KKKKKKKK vocês estão planejando tudo isso?"],
+["Trunks","Claro! O retorno do Richard merece uma comemoração."],
+["Luana","Eu ficaria feliz só de ver ele aparecer no grupo novamente."],
+["Bulma","E você vai ver. Mas também merece uma surpresa."],
+["Luana","Hoje estou um pouquinho mais tranquila. Ainda sinto falta dele, mas estou conseguindo aproveitar as coisas."],
+["Gohan","Fico feliz em ouvir isso. Você passou por dias de muita saudade e continuou encontrando motivos para sorrir."],
+["Luana","Vocês me ajudaram muito. Não sei como teria sido sem as conversas daqui."],
+["Trunks","Você também faz o grupo ficar mais divertido."],
+["Piccolo","Não se esqueça disso."],
+["Luana","Eu queria que ele pudesse ler tudo que vocês falaram sobre ele. Acho que ia rir bastante."],
+["Goku","QUANDO ELE VOLTAR EU VOU CONTAR TUDO!"],
+["Vegeta","Não precisa gritar."],
+["Luana","Estou com o coração esperando aquela notificação. Quando chegar, vou ficar muito feliz."],
+["Bulma","E até lá, você continua aqui com a gente. Combinado?"],
+["Luana","Combinado. ❤️"],
+["system","Fim do capítulo 10. Richard continua sem internet. A história segue..."]
+]
+},
+
+// CAPÍTULO 11
+{
+title:"Ele finalmente voltou! ❤️",
+image:images.Richard,
+description:"Depois de tanto tempo sem conseguir acessar o WhatsApp, Richard finalmente recupera a internet. Uma mensagem inesperada aparece no grupo. Luana, que passou tantos dias sentindo sua falta, fica emocionada e muito feliz. O reencontro começa com carinho, atenção e muitas palavras guardadas.",
+messages:[
+["system","08:47 • Grupo Guerreiros Z 🐉"],
+["system","Uma nova mensagem apareceu no grupo..."],
+["Richard","OIIIIIIII, PESSOAL!!! FINALMENTE CONSEGUI VOLTAR!! 😭😂"],
+["Goku","AAAAAAAAAAAAAAAA ELE VOLTOUUUUUU!"],
+["Trunks","RICHAAAAARD! KKKKKKKKK"],
+["Bulma","ATÉ QUE ENFIM! Você ficou desaparecido por tanto tempo!"],
+["Gohan","Que bom que conseguiu voltar! Estávamos esperando você."],
+["Vegeta","Hmph. Pensei que tivesse esquecido como usar o celular."],
+["Richard","KKKKKKKK calma, Vegeta. Foram dois dias sem internet. Eu tentava entrar, mas não conseguia de jeito nenhum."],
+["Goku","VOCÊ PERDEU MUITA COISA!"],
+["Trunks","O Goku quase destruiu a cozinha, a Bulma ficou brava e o Vegeta discutiu com todo mundo."],
+["Vegeta","Não precisava fazer uma lista."],
+["Luana","RICHARDDDDDDDD!! 😭❤️"],
+["Richard","LUANAAAA! MEU AMOR! ❤️"],
+["Luana","MEU DEUS, VOCÊ VOLTOU! Você não faz ideia de como eu estava com saudade! Eu abria nossa conversa todos os dias, queria te mandar mensagem, contar alguma coisa, perguntar como você estava... Eu fiquei esperando tanto por esse momento!"],
+["Richard","Ah, minha menina... vem cá. ❤️ Eu também estava com muita saudade de você. Queria ter conseguido entrar antes. Fiquei tentando resolver a internet, mas não estava dando certo."],
+["Luana","Eu sei que não foi culpa sua, amor. Não fiquei brava. Só senti muito sua falta. Até das conversas bobinhas eu senti saudade."],
+["Richard","Eu imagino, meu bem. E quero que você me conte tudo. Como você ficou? Conseguiu descansar? Está se alimentando direitinho? Como foram esses dias?"],
+["Luana","Eu fiquei mais quietinha. O pessoal percebeu e tentou me animar. A Bulma organizou uma tarde de jogos, o Goku fez umas confusões e o Trunks ficou inventando desafios."],
+["Richard","KKKKKKKK eu consigo imaginar tudo isso. Mas você ficou bem, amor? Quero saber de verdade, não precisa falar só que está tudo bem para me tranquilizar."],
+["Luana","Tive momentos em que fiquei tristinha. Às vezes queria tanto falar com você que abria nossa conversa e ficava olhando. Mas eles me fizeram companhia."],
+["Richard","Meu amor, queria poder te dar um abraço agora. Eu não queria que você passasse esses dias sentindo minha falta sem saber quando eu ia conseguir voltar."],
+["Luana","Eu queria muito esse abraço também. Quando vi sua mensagem, fiquei tão feliz que quase não consegui responder direito KKKKK."],
+["Richard","KKKKKK pode mandar quantas mensagens quiser. Hoje eu quero ouvir tudo. Não vou reclamar de você falar muito, não."],
+["Bulma","Acho que alguém está recebendo uma quantidade enorme de carinho agora. KKKKK"],
+["Trunks","A Luana mudou completamente depois que ele apareceu!"],
+["Gohan","É muito bom ver vocês conversando novamente."],
+["Richard","Eu também senti falta do grupo. Mas primeiro quero cuidar da minha menina."],
+["Luana","Você voltou e já está sendo todo carinhoso comigo... ❤️"],
+["Richard","Porque você merece, amor. Quero saber se está tudo bem, se está tranquila e se precisa de alguma coisa. Não quero que você guarde sua saudade sozinha."],
+["Luana","Eu só queria conversar com você, meu bem. Ouvir você falando comigo já deixa meu dia muito melhor."],
+["Richard","Então vamos conversar bastante. E quando você estiver tristinha, pode me contar. Não precisa esconder seus sentimentos de mim."],
+["Luana","Eu te amo tanto. Bem-vindo de volta, meu amor. ❤️"],
+["Richard","Também te amo, minha Luana. E estou muito feliz de estar aqui novamente."],
+["Goku","AGORA VAMOS FAZER A FESTA!"],
+["Vegeta","Finalmente ele voltou e você já está gritando."],
+["Richard","KKKKKKKK estava com saudade até dessas discussões."],
+["Luana","Hoje eu estou feliz demais. ❤️"]
+]
+},
+
+// CAPÍTULO 12
+{
+title:"Quero ouvir cada detalhe",
+image:images.Richard,
+description:"Richard quer saber como foram todos os dias em que esteve ausente. Luana começa a contar suas histórias e percebe que ele está realmente interessado em cada detalhe. O carinho entre os dois fica ainda mais evidente.",
+messages:[
+["system","10:12 • Grupo Guerreiros Z 🐉"],
+["Richard","Amor, você prometeu que ia me contar tudo. Estou esperando as histórias!"],
+["Luana","KKKKKKKK eu estava organizando mentalmente, mas acho que vou esquecer alguma coisa."],
+["Richard","Não tem problema. Conta na ordem que lembrar. Quero ouvir até as coisas mais simples."],
+["Luana","Então primeiro: o Goku acordou um dia querendo fazer uma competição de comida. A Bulma quase expulsou ele da cozinha."],
+["Goku","EU NÃO FIZ NADA DE ERRADO!"],
+["Bulma","Você comeu o que estava separado para todo mundo!"],
+["Richard","KKKKKKKKKKKK eu queria ter visto isso."],
+["Luana","Depois teve uma tarde de jogos. O Trunks inventou perguntas e o Vegeta ficou reclamando de todas."],
+["Trunks","Eu estava tentando fazer o grupo se divertir!"],
+["Vegeta","E conseguiu fazer barulho."],
+["Richard","Parece que não perdi nenhuma novidade nesse grupo."],
+["Luana","Mas eu senti falta de você em tudo. Às vezes acontecia alguma coisa e eu pensava que queria que estivesse aqui para rir junto."],
+["Richard","Eu queria ter estado. Mas agora estou aqui e quero aproveitar cada conversa com você."],
+["Gohan","Acho que vocês dois têm bastante assunto acumulado."],
+["Luana","Bastante é pouco KKKKKKK."],
+["Richard","Pode falar por horas, amor. Eu quero conhecer cada pedacinho desses dias."],
+["Luana","Também quero saber dos seus dias. Como você ficou sem internet? Conseguiu resolver tudo?"],
+["Richard","Foi complicado. Eu tentava acessar, mas não conseguia. Fiquei esperando conseguir conexão para voltar e falar com vocês."],
+["Luana","Deve ter sido chato para você também."],
+["Richard","Foi. Principalmente porque eu sabia que estava deixando você sem notícias. Mas não queria que você pensasse que eu tinha esquecido de você."],
+["Luana","Eu nunca achei que você tivesse esquecido. Só sentia falta mesmo."],
+["Richard","Então vamos recuperar essas conversas. Quero ouvir até a história mais boba."],
+["Bulma","Vou deixar vocês conversarem. Mas depois quero todo mundo reunido!"],
+["Luana","Pode deixar. ❤️"]
+]
+},
+
+// CAPÍTULO 13
+{
+title:"Um abraço que estava faltando",
+image:images.Luana,
+description:"Richard percebe que a saudade ainda deixou Luana sensível. Ele demonstra cuidado, pergunta como ela está e tenta transformar a conversa em um momento acolhedor. Os amigos dão espaço para os dois.",
+messages:[
+["system","08:30 • Grupo Guerreiros Z 🐉"],
+["Richard","Bom dia, minha menina! Como você acordou hoje?"],
+["Luana","Bom dia, meu amor! Acordei bem. Fiquei feliz quando vi sua mensagem."],
+["Richard","Eu queria estar perto para te dar um abraço bem apertado."],
+["Luana","Eu também queria. Acho que ficaria agarradinha em você por muito tempo."],
+["Richard","Então imagina que estou te mandando o abraço mais demorado do mundo. E não vou soltar tão cedo. ❤️"],
+["Luana","KKKKKKKK queria receber esse abraço de verdade."],
+["Richard","Eu sei, amor. E quero que você se sinta cuidada mesmo quando não podemos estar pertinho."],
+["Luana","Você está sendo muito fofo comigo hoje."],
+["Richard","Hoje e sempre. Quero saber se você descansou, se tomou café e se está se sentindo bem."],
+["Luana","Descansei sim. Mas ainda estou me acostumando com você de volta KKKKK. Parece que quero conversar o dia inteiro."],
+["Richard","Pode conversar. Não precisa ter vergonha de sentir saudade."],
+["Gohan","Acho que esse grupo está testemunhando um momento muito especial."],
+["Bulma","Vou fingir que não estou lendo para deixar os dois à vontade."],
+["Trunks","Mas você está lendo, mãe! KKKKK"],
+["Bulma","Detalhes!"],
+["Luana","KKKKKKKK vocês não prestam."],
+["Richard","Deixa eles, amor. Eu só quero saber se você está bem. E se não estiver, também quero saber."],
+["Luana","Estou melhor agora. Você voltou e isso já me deixou muito feliz."],
+["Richard","Fico feliz, mas lembra de cuidar de você também. Quero que coma direitinho, descanse e tenha momentos bons mesmo quando não estivermos conversando."],
+["Luana","Pode deixar. E obrigada por cuidar de mim assim."],
+["Richard","Sempre que eu puder, meu bem. ❤️"]
+]
+},
+
+// CAPÍTULO 14
+{
+title:"A festa de boas-vindas",
+image:images.Bulma,
+description:"Bulma finalmente realiza a festa que estava planejando. Goku transforma a comemoração em uma competição, Vegeta perde a paciência e Richard agradece a todos por terem esperado sua volta.",
+messages:[
+["system","12:00 • Grupo Guerreiros Z 🐉"],
+["Bulma","ATENÇÃO! A FESTA DE BOAS-VINDAS VAI COMEÇAR!"],
+["Goku","EU ESTAVA ESPERANDO POR ISSO!"],
+["Vegeta","Você estava esperando pela comida."],
+["Goku","TAMBÉM!"],
+["Trunks","Richard, dessa vez você não escapa. Temos uma comemoração preparada!"],
+["Richard","KKKKKK obrigado, pessoal. Eu não esperava tudo isso."],
+["Gohan","Você fez falta. É bom ter todos reunidos novamente."],
+["Piccolo","A equipe está completa."],
+["Luana","Eu falei que eles estavam preparando alguma coisa! KKKKK."],
+["Richard","Você sabia?"],
+["Luana","A Bulma não conseguia esconder. E o Goku falava de festa a cada cinco minutos."],
+["Goku","PORQUE FESTA É BOM!"],
+["Bulma","Preparei uma mesa enorme. Mas ninguém vai começar antes de todos chegarem."],
+["Vegeta","Isso vai ser impossível com Kakarotto por perto."],
+["Trunks","Eu vou vigiar ele."],
+["Richard","Quero agradecer especialmente a vocês por terem feito companhia para a Luana nesses dias."],
+["Gohan","Ela faz parte da nossa família de amigos. Não deixaríamos ela sozinha."],
+["Luana","Vocês foram maravilhosos comigo. Eu realmente precisava daquela companhia."],
+["Bulma","E agora temos você de volta para completar o grupo."],
+["Richard","Obrigado de verdade. E amor, obrigado por esperar e entender que eu estava sem conexão."],
+["Luana","Eu não precisava de nada além de saber que você estava bem. Fiquei com saudade, mas agora quero aproveitar nosso tempo juntos."],
+["Richard","E vamos aproveitar muito. Hoje é dia de comemorar!"],
+["Goku","AGORA POSSO COMER?!"],
+["Bulma","PODE! MAS NÃO COMA TUDO!"],
+["Goku","HAHAHAHA!"]
+]
+},
+
+// CAPÍTULO 15
+{
+title:"Nossa música",
+image:images.Luana,
+description:"Luana finalmente compartilha com Richard as duas músicas que guardou durante a espera. Eles conversam sobre lembranças, sentimentos e os pequenos detalhes que tornam a relação especial.",
+messages:[
+["system","20:15 • Conversa no grupo"],
+["Luana","Richard, lembra que falei que tinha duas músicas para te mostrar?"],
+["Richard","Lembro sim, amor! Estava esperando por isso."],
+["Luana","A primeira é Romantic Ageru Yo. Eu ouvi e fiquei lembrando de você."],
+["Richard","Que lindo, meu bem. E a segunda?"],
+["Luana","Hatsukoi wa Kumo ni Notte. Também queria muito ouvir com você."],
+["Richard","Então agora temos nossas músicas para esse momento. Quero ouvir com você e saber o que passou pela sua cabeça quando escutou."],
+["Luana","Eu fiquei pensando em como queria compartilhar aquilo com você. É engraçado como uma música pode fazer a gente sentir tanta coisa."],
+["Gohan","A música tem mesmo esse poder. Às vezes ela guarda sentimentos que a gente nem consegue explicar."],
+["Trunks","Acho que essas duas vão virar a trilha sonora do casal."],
+["Bulma","Que romântico!"],
+["Vegeta","Vocês estão transformando até uma música em reunião sentimental."],
+["Goku","EU GOSTO DE MÚSICA!"],
+["Luana","KKKKKKKK vocês não deixam a gente ter um momento tranquilo."],
+["Richard","Não tem problema, amor. Eu gosto de ver todo mundo feliz."],
+["Luana","Eu queria que você soubesse que lembrei de você em vários momentos. Não só quando estava triste. Também quando estava feliz e queria dividir alguma coisa."],
+["Richard","Isso significa muito para mim. Quero ser alguém com quem você possa dividir seus dias bons e ruins."],
+["Luana","Você é. ❤️"],
+["Richard","E você é muito especial para mim, Luana."],
+["Piccolo","Uma boa lembrança pode acompanhar alguém por muito tempo."],
+["Luana","Essa conversa vai virar mais uma lembrança boa. ❤️"]
+]
+},
+
+// CAPÍTULO 16
+{
+title:"Uma aventura inesperada",
+image:images.Vegeta,
+description:"A paz dos Guerreiros Z é interrompida por uma energia desconhecida. Uma nova aventura começa, e Richard participa da investigação ao lado de Luana e dos amigos.",
+messages:[
+["system","09:45 • Grupo Guerreiros Z 🐉"],
+["Goku","PESSOAL! ESTOU SENTINDO UMA ENERGIA ESTRANHA!"],
+["Piccolo","Eu também. Ela está se aproximando rapidamente."],
+["Gohan","Precisamos descobrir de onde vem."],
+["Vegeta","Finalmente alguma coisa interessante."],
+["Bulma","Não saiam correndo antes de eu verificar o radar!"],
+["Trunks","A leitura está vindo das montanhas."],
+["Richard","Parece que minha volta trouxe aventura junto KKKKK."],
+["Luana","Você acabou de voltar e já vai querer entrar em uma batalha?"],
+["Richard","KKKKKK não se preocupa, amor. Vamos ficar atentos."],
+["Gohan","Precisamos dividir a equipe. Uma parte investiga e outra fica de apoio."],
+["Piccolo","Eu vou com Gohan."],
+["Trunks","Eu fico com a Bulma acompanhando o radar."],
+["Richard","Eu vou com Luana. Podemos observar os movimentos da energia sem nos afastar da equipe."],
+["Luana","Combinado. Mas você também vai tomar cuidado, viu?"],
+["Richard","Vou sim. E você também. Não quero que se coloque em perigo desnecessariamente."],
+["Goku","EU VOU NA FRENTE!"],
+["Vegeta","KAKAROTTO, ESPERA!"],
+["Bulma","Vocês dois vão esperar as coordenadas!"],
+["Trunks","Acho que a missão começou antes mesmo de sair de casa KKKKK."],
+["Luana","Essa equipe não muda nunca."],
+["Richard","E ainda bem. Estava com saudade dessa bagunça."]
+]
+},
+
+// CAPÍTULO 17
+{
+title:"A batalha dos Guerreiros Z",
+image:images.Goku,
+description:"A ameaça finalmente aparece. Os Guerreiros Z precisam combinar suas habilidades para proteger a Terra. Richard e Luana trabalham em equipe e mostram que confiança também é uma forma de força.",
+messages:[
+["system","14:10 • Grupo Guerreiros Z 🐉"],
+["Gohan","Encontramos a criatura. Ela está concentrando uma quantidade enorme de energia."],
+["Piccolo","Não ataquem sem observar primeiro."],
+["Goku","EU VOU TESTAR A FORÇA DELA!"],
+["Vegeta","Você não consegue seguir uma ordem?"],
+["Trunks","Cuidado! Ela está se movimentando muito rápido!"],
+["Richard","Luana, fique atenta ao lado esquerdo. Ela está tentando nos cercar."],
+["Luana","Eu vi! Vou distrair para vocês conseguirem se posicionar."],
+["Gohan","Boa estratégia. Mantenham contato!"],
+["Goku","KAMEHAMEHAAAA!"],
+["Vegeta","FINAL FLASH!"],
+["Piccolo","A energia dela está diminuindo!"],
+["Richard","Agora, pessoal! Precisamos agir juntos!"],
+["Luana","Estou pronta! Vamos!"],
+["Trunks","Conseguimos abrir uma brecha!"],
+["Gohan","Continuem! Não deixem ela recuperar energia!"],
+["Goku","VAMOS, GUERREIROS Z!"],
+["system","A energia da criatura desapareceu. A batalha terminou."],
+["Luana","CONSEGUIMOS!"],
+["Richard","Você foi incrível, amor! Está tudo bem? Se machucou?"],
+["Luana","Estou bem! E você?"],
+["Richard","Estou bem também. Só queria ter certeza de que você estava segura."],
+["Gohan","Trabalhar em equipe fez toda a diferença."],
+["Bulma","E agora espero que ninguém destrua mais nada!"],
+["Vegeta","Não posso prometer isso."],
+["Luana","KKKKKKKK pelo menos vencemos! ❤️"]
+]
+},
+
+// CAPÍTULO 18
+{
+title:"Uma noite de tranquilidade",
+image:images.Bulma,
+description:"Depois da batalha, todos descansam. Luana e Richard aproveitam para conversar sobre o quanto amadureceram durante os últimos acontecimentos. O grupo transforma a noite em uma reunião cheia de brincadeiras.",
+messages:[
+["system","20:30 • Grupo Guerreiros Z 🐉"],
+["Bulma","Hoje ninguém vai treinar. Todo mundo precisa descansar."],
+["Goku","Mas eu ainda tenho energia!"],
+["Vegeta","Você sempre tem."],
+["Trunks","Que tal uma noite de perguntas?"],
+["Gohan","Pode ser divertido."],
+["Luana","Eu topo!"],
+["Richard","Eu também. Quero participar de tudo que vocês inventarem."],
+["Trunks","Primeira pergunta: quem é o mais dramático do grupo?"],
+["Goku","VEGETA!"],
+["Bulma","Concordo KKKKK."],
+["Vegeta","KAKAROTTO!"],
+["Richard","Segunda pergunta: quem é o mais carinhoso?"],
+["Gohan","Acho que a resposta depende da situação."],
+["Luana","Para mim, o Richard. ❤️"],
+["Trunks","OOOOOOOHHHH!"],
+["Bulma","Que resposta rápida!"],
+["Richard","KKKKKKKK você também é muito carinhosa comigo, amor."],
+["Luana","É porque eu gosto muito de você."],
+["Richard","Eu gosto muito de você também. E quero que saiba que gosto de conversar com você mesmo quando não temos assunto nenhum."],
+["Luana","Eu também. Às vezes só quero ficar conversando sobre qualquer besteira."],
+["Gohan","Essas são as melhores conversas."],
+["Goku","EU QUERO PERGUNTAS SOBRE COMIDA!"],
+["Vegeta","Claro que quer."],
+["Bulma","A próxima pergunta será: quem consegue ficar mais tempo sem falar de comida?"],
+["Trunks","Essa é impossível para o Goku!"],
+["Luana","KKKKKKKKKK."]
+]
+},
+
+// CAPÍTULO 19
+{
+title:"O último grande desafio",
+image:images.Piccolo,
+description:"Uma nova leitura misteriosa aparece no radar. Os Guerreiros Z precisam trabalhar juntos mais uma vez. A missão exige coragem, paciência e confiança entre todos.",
+messages:[
+["system","07:55 • Grupo Guerreiros Z 🐉"],
+["Bulma","Pessoal, temos um problema. O radar encontrou uma energia estranha perto da região norte."],
+["Trunks","É parecida com aquela que encontramos antes?"],
+["Bulma","Muito parecida, mas parece mais instável."],
+["Piccolo","Pode ser uma consequência da última batalha."],
+["Gohan","Precisamos investigar antes que se torne perigosa."],
+["Goku","ENTÃO VAMOS!"],
+["Vegeta","Dessa vez, quero que todos prestem atenção."],
+["Richard","Vamos organizar a equipe primeiro. Não adianta agir sem estratégia."],
+["Luana","Concordo. Vamos fazer tudo com calma."],
+["Trunks","Eu acompanho o radar. Gohan e Piccolo vão na frente."],
+["Bulma","Vou ficar monitorando tudo daqui."],
+["Goku","E EU VOU COM VEGETA!"],
+["Vegeta","Infelizmente."],
+["Richard","Luana, vamos ficar perto da equipe. Se algo acontecer, nos ajudamos."],
+["Luana","Pode deixar. Eu confio em você."],
+["Richard","E eu confio em você também. Não esquece disso."],
+["Gohan","Encontramos a origem da energia. Parece que está ligada a um objeto antigo."],
+["Piccolo","Não toquem nele até entendermos o que é."],
+["Trunks","O radar está estabilizando!"],
+["Bulma","A energia está diminuindo. Acho que conseguimos impedir o pior."],
+["Goku","ENTÃO VENCEMOS!"],
+["Vegeta","Pelo menos dessa vez você esperou."],
+["Luana","Mais uma missão concluída!"],
+["Richard","E mais uma aventura ao seu lado, amor. ❤️"]
+]
+},
+
+// CAPÍTULO 20
+{
+title:"Nossa história continua",
+image:"file_0000000057ec820e85417bce5d04520f.png",
+description:"O último capítulo reúne todos os personagens para lembrar da jornada. A ausência de Richard, a saudade de Luana, o reencontro, as amizades e as aventuras fizeram parte de uma história que ainda tem muitos capítulos pela frente.",
+messages:[
+["system","19:00 • Grupo Guerreiros Z 🐉"],
+["Bulma","Pessoal, hoje quero fazer uma retrospectiva de tudo que aconteceu."],
+["Goku","EU LEMBRO DE TODAS AS COMIDAS!"],
+["Vegeta","Era óbvio."],
+["Trunks","Eu lembro principalmente de quando o Richard voltou e a Luana ficou toda feliz."],
+["Gohan","Foram dias difíceis, mas também tivemos momentos muito especiais."],
+["Piccolo","A espera ensinou paciência. A amizade mostrou que ninguém precisa enfrentar os momentos difíceis sozinho."],
+["Richard","Eu lembro de ter voltado e encontrado a Luana tão feliz. Foi muito especial para mim."],
+["Luana","Eu lembro de ficar esperando sua mensagem. Quando ela apareceu, parecia que meu dia inteiro tinha mudado."],
+["Richard","Eu queria que você nunca duvidasse do quanto é importante para mim."],
+["Luana","Eu sei, meu amor. E quero que você saiba que nossa história tem muitos capítulos pela frente."],
+["Goku","ENTÃO NÃO É O FIM?!"],
+["Trunks","Parece que ainda teremos muitas aventuras!"],
+["Bulma","Desde que ninguém destrua minha casa, podem continuar."],
+["Vegeta","Não prometo nada."],
+["Gohan","O importante é que continuemos juntos."],
+["Piccolo","Uma equipe não é feita apenas de batalhas vencidas, mas também dos laços que permanecem."],
+["Richard","Luana, obrigado por fazer parte dessa aventura comigo. Quero continuar cuidando de você, rindo com você e criando lembranças boas."],
+["Luana","E eu quero continuar ao seu lado. Obrigada por voltar, por me ouvir e por cuidar de mim. Eu te amo. ❤️"],
+["Richard","Também te amo, minha menina. Essa história não termina aqui."],
+["Goku","ENTÃO VAMOS COMEMORAR!"],
+["Trunks","Até a próxima aventura!"],
+["Bulma","Foi uma jornada incrível."],
+["Vegeta","Hmph. Até que não foi tão ruim."],
+["Piccolo","Até a próxima."],
+["Gohan","Que nossa amizade continue sempre."],
+["system","🐉 FIM DA PRIMEIRA TEMPORADA • ATÉ A PRÓXIMA AVENTURA ❤️"]
+]
+}
+];
+
+let current=0;
+let playing=false;
+let songIndex=0;
+const s1=document.getElementById("song1");
+const s2=document.getElementById("song2");
+
+function show(id){
+ document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));
+ document.getElementById(id).classList.add("active");
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+function openChapter(i){
+ current=i;
+ const c=chapters[i];
+ document.getElementById("number").textContent="CAPÍTULO "+(i+1)+" / 20";
+ document.getElementById("title").textContent=c.title;
+ document.getElementById("description").textContent=c.description;
+ document.getElementById("chapterImage").src=c.image;
+ document.getElementById("bar").style.width=(i/20*100)+"%";
+ show("chapterIntro");
+}
+function openMessages(){
+ const c=chapters[current];
+ document.getElementById("date").textContent="CAPÍTULO "+(current+1)+" • "+c.title;
+ const box=document.getElementById("messages");
+ box.innerHTML="";
+ c.messages.forEach((m,i)=>{
+  const [name,content]=m;
+  const row=document.createElement("div");
+  row.className="message "+(name==="system"?"system":name==="Luana"?"me":"");
+  if(name==="system"){
+   const bubble=document.createElement("div");
+   bubble.className="bubble";
+   const body=document.createElement("div");
+   body.className="msg";
+   body.textContent=content;
+   bubble.append(body);
+   row.append(bubble);
+  }else{
+   const avatar=document.createElement("img");
+   avatar.className="avatar";
+   avatar.src=images[name]||images.Goku;
+   avatar.alt=name;
+   const bubble=document.createElement("div");
+   bubble.className="bubble";
+   const sender=document.createElement("div");
+   sender.className="sender";
+   sender.textContent=name;
+   const body=document.createElement("div");
+   body.className="msg";
+   body.textContent=content;
+   const time=document.createElement("div");
+   time.className="time";
+   time.textContent=String(8+Math.floor(i/5)).padStart(2,"0")+":"+
+     String((12+i*7)%60).padStart(2,"0");
+   bubble.append(sender,body,time);
+   row.append(avatar,bubble);
+  }
+  box.append(row);
+ });
+ document.getElementById("bar").style.width=((current+1)/20*100)+"%";
+ show("chat");
+}
+function previous(){
+ if(current===0)show("home");
+ else openChapter(current-1);
+}
+function next(){
+ if(current<19)openChapter(current+1);
+ else ending();
+}
+function ending(){
+ const box=document.getElementById("endingMessages");
+ box.innerHTML="";
+ [
+ ["Goku","Foi uma aventura incrível! Quero mais!"],
+ ["Vegeta","Hmph. Não foi tão ruim."],
+ ["Bulma","O importante é que todos estão bem."],
+ ["Gohan","Que nossa amizade continue."],
+ ["Trunks","Até a próxima aventura!"],
+ ["Piccolo","Nunca se esqueçam do que aprenderam."],
+ ["Richard","Obrigado por cada momento, Luana. ❤️"],
+ ["Luana","Essa história continua dentro de nós. ❤️"]
+ ].forEach(([n,t])=>{
+  const p=document.createElement("p");
+  const b=document.createElement("strong");
+  b.textContent=n+": ";
+  p.append(b,document.createTextNode(t));
+  box.append(p);
+ });
+ document.getElementById("bar").style.width="100%";
+ show("ending");
+}
+function music(){
+ if(playing){
+  s1.pause();s2.pause();
+  playing=false;
+  return;
+ }
+ const song=songIndex===0?s1:s2;
+ song.play().then(()=>playing=true).catch(()=>{
+  alert("Confira se os arquivos das músicas estão na pasta do jogo e se os nomes estão corretos.");
+ });
+}
+s1.addEventListener("ended",()=>{
+ songIndex=1;
+ s2.play().catch(()=>{});
+});
+s2.addEventListener("ended",()=>{
+ songIndex=0;
+ s1.play().catch(()=>{});
+});
+</script>
+</body>
+</html>
